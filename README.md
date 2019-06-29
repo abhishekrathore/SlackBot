@@ -1,6 +1,6 @@
 # Making a Slack Bot
 
-1. Create an App in your slack developer console and Add it to your workspace.
+1. Create an App in your slack developer console [`https://api.slack.com/apps`] and Add it to your workspace. 
 2. Go to `Bot Users` in your App settings and change Display Name and @handle of your bot and Save Changes.
 3. Go to `Event Subscriptions` in your App settings and enable Events and Save Changes.
 4. Put a 'Request URL' of your Server (any POST endpoint which returns the server challenege).
