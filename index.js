@@ -22,42 +22,42 @@ server.use(apiLimiter);
 
 
 server.post("/talk",(req,res)=>{
-    console.log(req.body.event);
-    if(req.body.event.text.indexOf('score')>=0){
-        axios.get('https://cricapi.com/api/matches?apikey=YOUR_API').then(response=>{
-            console.log(response.data.matches)
-            matches = response.data.matches.map((match)=>{return {id:match.unique_id,match:match['team-1']+"-"+match['team-2']}});
-            console.log(matches);
+    // console.log(req.body.event);
+    // if(req.body.event.text.indexOf('score')>=0){
+    //     axios.get('https://cricapi.com/api/matches?apikey=w4iP5DjE0aS1vOHaz1TvHsRiLV23').then(response=>{
+    //         console.log(response.data.matches)
+    //         matches = response.data.matches.map((match)=>{return {id:match.unique_id,match:match['team-1']+"-"+match['team-2']}});
+    //         console.log(matches);
 
 
-            axios.post('https://slack.com/api/chat.postMessage',{
-                "text": "Choose a Match and Send me 'match <number>' : "+ matches.map((obj,i)=>(i+1)+". "+obj.match).join(" | "),
-                "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer YOUR_BOT_TOKEN'}}).then(
-                (res)=>{console.log(res.data)}
-                )
+    //         axios.post('https://slack.com/api/chat.postMessage',{
+    //             "text": "Choose a Match and Send me 'match <number>' : "+ matches.map((obj,i)=>(i+1)+". "+obj.match).join(" | "),
+    //             "channel": req.body.event.channel
+    //         },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer xoxb-21574633044-679277058708-zt07TmHBQjw4VsxZUwmixwQP'}}).then(
+    //             (res)=>{console.log(res.data)}
+    //             )
 
-        })
-    }
+    //     })
+    // }
 
-    if(req.body.event.text.indexOf('match')>=0){
-        console.log(matches[parseInt(req.body.event.text.split(" ")[1])-1].id)
-        axios.get('https://cricapi.com/api/cricketScore?apikey=YOUR_API&unique_id='+matches[parseInt(req.body.event.text.split(" ")[1])-1].id).then(response=>{
-            console.log(response.data.score)
+    // if(req.body.event.text.indexOf('match')>=0){
+    //     console.log(matches[parseInt(req.body.event.text.split(" ")[1])-1].id)
+    //     axios.get('https://cricapi.com/api/cricketScore?apikey=w4iP5DjE0aS1vOHaz1TvHsRiLV23&unique_id='+matches[parseInt(req.body.event.text.split(" ")[1])-1].id).then(response=>{
+    //         console.log(response.data.score)
      
-            axios.post('https://slack.com/api/chat.postMessage',{
-                "text": response.data.score,
-                "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer YOUR_BOT_TOKEN'}}).then(
-                (res)=>{console.log(res.data)}
-                )
+    //         axios.post('https://slack.com/api/chat.postMessage',{
+    //             "text": response.data.score,
+    //             "channel": req.body.event.channel
+    //         },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer xoxb-21574633044-679277058708-zt07TmHBQjw4VsxZUwmixwQP'}}).then(
+    //             (res)=>{console.log(res.data)}
+    //             )
 
 
-        })
-    }
+    //     })
+    // }
 
     
-    res.json({ok:"ok"})
+    res.json({challenge:req.body.challenge})
 })
 
 server.listen(process.env.PORT || 8080,(req,res)=>{
