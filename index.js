@@ -29,7 +29,7 @@ server.use(apiLimiter);
 server.post("/talk",(req,res)=>{
     console.log(req.body.event);
     if(req.body.event.text.indexOf('score')>=0){
-        axios.get('https://cricapi.com/api/matches?apikey=w4iP5DjE0aS1vOHaz1TvHsRiLV23').then(response=>{
+        axios.get('https://cricapi.com/api/matches?apikey='+process.env.API_KEY).then(response=>{
             console.log(response.data.matches)
             matches = response.data.matches.map((match)=>{return {id:match.unique_id,match:match['team-1']+"-"+match['team-2']}});
             console.log(matches);
@@ -38,7 +38,7 @@ server.post("/talk",(req,res)=>{
             axios.post('https://slack.com/api/chat.postMessage',{
                 "text": "Choose a Match and Send me 'match <number>' : "+ matches.map((obj,i)=>(i+1)+". "+obj.match).join(" | "),
                 "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer xoxb-21574633044-679277058708-zt07TmHBQjw4VsxZUwmixwQP'}}).then(
+            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_TOKEN}}).then(
                 (res)=>{console.log(res.data)}
                 )
 
@@ -47,13 +47,13 @@ server.post("/talk",(req,res)=>{
 
     if(req.body.event.text.indexOf('match')>=0){
         console.log(matches[parseInt(req.body.event.text.split(" ")[1])-1].id)
-        axios.get('https://cricapi.com/api/cricketScore?apikey=w4iP5DjE0aS1vOHaz1TvHsRiLV23&unique_id='+matches[parseInt(req.body.event.text.split(" ")[1])-1].id).then(response=>{
+        axios.get('https://cricapi.com/api/cricketScore?apikey='+process.env.API_KEY+'&unique_id='+matches[parseInt(req.body.event.text.split(" ")[1])-1].id).then(response=>{
             console.log(response.data.score)
      
             axios.post('https://slack.com/api/chat.postMessage',{
                 "text": response.data.score,
                 "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer xoxb-21574633044-679277058708-zt07TmHBQjw4VsxZUwmixwQP'}}).then(
+            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_TOKEN}}).then(
                 (res)=>{console.log(res.data)}
                 )
 
