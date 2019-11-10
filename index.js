@@ -21,12 +21,12 @@ server.set('trust proxy', 1);
 server.use(apiLimiter);
 
 //For Challenge
+// server.post("/talk",(req,res)=>{
+// res.json({"challenge":req.body.challenge});
+// });
+
+
 server.post("/talk",(req,res)=>{
-res.json({"challenge":req.body.challenge});
-});
-
-
-server.post("/talkx",(req,res)=>{
     console.log(req.body.event);
     if(req.body.event.text.indexOf('score')>=0){
         axios.get('https://cricapi.com/api/matches?apikey='+process.env.API_KEY).then(response=>{
