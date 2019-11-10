@@ -1,3 +1,17 @@
+# Installation
+
+1. `npm install` the dependecies.
+2. `npm start` the server.
+3. Deploy the server on some cloud service.
+
+Provide the following environment variables for proper functioning :
+
+```
+API_KEY='xxxxxx'
+SLACK_TOKEN='xoxbxxxxxx'
+```
+
+
 # Making a Slack Bot
 
 1. Create an App in your slack developer console [`https://api.slack.com/apps`] and Add it to your workspace. 
