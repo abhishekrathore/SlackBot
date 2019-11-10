@@ -8,7 +8,7 @@ Provide the following environment variables for proper functioning :
 
 ```
 API_KEY='xxxxxx'
-SLACK_TOKEN='xoxbxxxxxx'
+SLACK_BOT_TOKEN='xoxbxxxxxx'
 ```
 
 
@@ -84,7 +84,7 @@ In above example you can see that event type is `message`. You can extract this 
 
 POST https://slack.com/api/chat.postMessage
 Content-type: application/json
-Authorization: Bearer YOUR_BOTS_TOKEN
+Authorization: Bearer SLACK_BOT_TOKEN
 {
     "text": "Hello! Knock, knock.",
     "channel": "CBR2V3XEX"

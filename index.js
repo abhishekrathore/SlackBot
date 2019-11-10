@@ -38,7 +38,7 @@ server.post("/talk",(req,res)=>{
             axios.post('https://slack.com/api/chat.postMessage',{
                 "text": "Choose a Match and Send me 'match <number>' : "+ matches.map((obj,i)=>(i+1)+". "+obj.match).join(" | "),
                 "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_TOKEN}}).then(
+            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_BOT_TOKEN}}).then(
                 (res)=>{console.log(res.data)}
                 )
 
@@ -53,7 +53,7 @@ server.post("/talk",(req,res)=>{
             axios.post('https://slack.com/api/chat.postMessage',{
                 "text": response.data.score,
                 "channel": req.body.event.channel
-            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_TOKEN}}).then(
+            },{headers:{ 'Content-type': 'application/json','Authorization': 'Bearer '+process.env.SLACK_BOT_TOKEN}}).then(
                 (res)=>{console.log(res.data)}
                 )
 
